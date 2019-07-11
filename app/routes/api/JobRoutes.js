@@ -15,7 +15,7 @@ router.get('/GetJobsByEmp/:id', function (req, res) {
     jobController.findByEmpId(req, res);
 });
 
-router.post('/AddJob', function(req,res){
+router.post('/AddJob/', function(req,res){
     console.log('ROUTER');
     jobController.addJob(req,res);
 });

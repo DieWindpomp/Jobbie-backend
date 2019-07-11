@@ -6,6 +6,7 @@ const ControllerCommon = require('./common/controllerCommon');
 
 /* Load Car entity */
 const JobM = require('../model/Job');
+const AddJobModel = require('../model/Job');
 
 const JobL = require('../model/JobList');
 
@@ -34,21 +35,18 @@ class JobController {
     };
     addJob(req,res)
     {
-        let job = new job();
-
-        Job.Description = req.body.description;
-        Job.LocationID = req.body.locationID;
-        Job.Urgency = req.body.urgency;
-        Job.Active  = req.body.active;
-        Job.Date = req.body.date;
-        Job.Complete = req.body.complete;
-        Job.Comment = req.body.comment;
-        Job.Exist = req.body.exist;
-        empID = req.body.empid;
-        return this.JobDAO.addJob(job,empID)
+        let job = new AddJobModel();
+        console.log('CON');
+        job.Description = req.body.JobDescription;
+        job.LocationID = req.body.LocationID;
+        job.Urgency = req.body.Urgency;
+        job.Date = req.body.Date;
+        job.Comment = req.body.Comment;
+        job.empID = req.body.EmpID;
+        return this.jobDAO.addJob(job)
         .then(this.common.editSuccess(res))
         .catch(this.common.serverError(res));
-    }
+    };
     
 
 

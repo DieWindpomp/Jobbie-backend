@@ -1,6 +1,7 @@
 /* Load Car entity */
 const Job = require('../model/Job');
 const JobL = require('../model/JobList');
+const AddJob = require('../model/AddJob');
 
 /* Load DAO Common functions */
 const daoCommon = require('./commons/daoCommon');
@@ -55,25 +56,27 @@ class JobDAO {
             return cars;
         });
     };
-    addJob(Job,empID) 
+    addJob(AddJob) 
     {
+        console.log('DAO');
         let sqlRequest = `INSERT INTO Job
-        (Description, LocationID, Urgency, Active, Date, Complete, Comment, Exist)
-        VALUES ($Description,$LocationID,$Urgency,$Active, $Date, $Complete, $Comment, $Exist);
+        (Description, LocationID, Urgency,Active,Date, Complete, Comment, Exist)
+        VALUES ($Description,$LocationID,$Urgency,$Active,$Date, $Complete, $Comment, $Exist);
         
         INSERT INTO JobEmployee
         (empID,jobID,Exist)
-        VALUES ($EmpID,(SELECT last_insert_rowid() FROM Job),1)`;
+        VALUES ($EmpID,(SELECT last_insert_rowid() FROM Job),1)`;        
+
         let sqlParams = {
-            $Description: Job.Description,
-            $LocationID : Job.LocationID,
-            $Urgency : Job.Urgency,
-            $Active : Job.Active,
-            $Date : Job.Date,
-            $Complete : Job.Complete,
-            $Comment : Job.Comment,
-            $Exist : Job.$Exist,
-            $EmpID : empID
+            $Description: AddJob.Description,
+            $LocationID : AddJob.LocationID,
+            $Urgency : AddJob.Urgency,
+            $Active : 0,
+            $Date : AddJob.Date,
+            $Complete : 0,
+            $Comment : AddJob.Comment,
+            $EmpID : AddJob.empID,
+            $Exist : 1
         };
         return this.common.run(sqlRequest,sqlParams);
     };

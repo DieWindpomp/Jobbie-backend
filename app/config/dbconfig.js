@@ -43,25 +43,20 @@ let init = function () {
         Exist BOOL
     )`);
 
-    db.run(`CREATE TABLE if not exists JobEmployee(
-        jobID INTEGER,
-        empID INTEGER,
-        Exist BOOL,
-        FOREIGN KEY(empID) REFERENCES Employee(id),
-        FOREIGN KEY(jobID) REFERENCES job(id)
-    )`);
 
     db.run(`CREATE TABLE if not exists Job(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         Description TEXT,
         LocationID INTEGER,
+        EmpID INTEGER,
         Urgency TEXT,
         Active BOOL,
         Date DATE,
         Complete BOOL,
         Comment TEXT,
         Exist BOOL,
-        FOREIGN KEY(LocationID) REFERENCES Location(id)
+        FOREIGN KEY(LocationID) REFERENCES Location(id),
+        FOREIGN KEY(EmpID) REFERENCES Employee(id)
     )`);
 
 

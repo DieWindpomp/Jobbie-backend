@@ -23,11 +23,10 @@ class JobDAO {
     findByEmpId(id) {
         console.log('DAO');
         let sqlRequest = `SELECT Job.id,Job.Description,Company,Urgency,Address, (CName ||' '|| CSurname ||' '||CContact) AS 'ClientDetails' 
-        FROM Job, JobEmployee, Employee, Location, ClientLocation, Client  
-        WHERE empID = `+id+` AND 
-		empID=Employee.id AND
-		jobID=Job.id AND
-		Job.LocationID = Location.id AND
+        FROM Job, Employee, Location, ClientLocation, Client  
+        WHERE EmpID = `+id+` AND 
+        EmpID=Employee.id AND
+        Job.LocationID = Location.id AND
 		Location.id = ClientLocation.LocationID AND
 		ClientLocation.ClientID = Client.id`;
         
@@ -59,25 +58,22 @@ class JobDAO {
     addJob(AddJob) 
     {
         console.log('DAO');
-        let sqlRequest = `INSERT INTO Job
-        (Description, LocationID, Urgency,Active,Date, Complete, Comment, Exist)
-        VALUES ($Description,$LocationID,$Urgency,$Active,$Date, $Complete, $Comment, $Exist);
-        
-        INSERT INTO JobEmployee
-        (empID,jobID,Exist)
-        VALUES ($EmpID,(SELECT last_insert_rowid() FROM Job),1)`;        
-
+        let sqlRequest = `INSERT INTO Job(Description,LocationID,EmpID,Urgency,Active,Date,Complete,Comment,Exist)
+        VALUES($Description,$LocationID,$EmpID,$Urgency,$Active,$Date,$Complete,$Comment,$Exist)`;      
+        console.log(AddJob);
         let sqlParams = {
             $Description: AddJob.Description,
             $LocationID : AddJob.LocationID,
+            $EmpID : AddJob.empID,
             $Urgency : AddJob.Urgency,
             $Active : 0,
-            $Date : AddJob.Date,
+            $Date : AddJob.JobDate,
             $Complete : 0,
-            $Comment : AddJob.Comment,
-            $EmpID : AddJob.empID,
+            $Comment : AddJob.Comment,          
             $Exist : 1
+            
         };
+        console.log(sqlParams);
         return this.common.run(sqlRequest,sqlParams);
     };
 

@@ -6,7 +6,7 @@ const ControllerCommon = require('./common/controllerCommon');
 
 /* Load Car entity */
 const JobM = require('../model/Job');
-const AddJobModel = require('../model/Job');
+const AddJobModel = require('../model/AddJob');
 
 const JobL = require('../model/JobList');
 
@@ -35,12 +35,12 @@ class JobController {
     };
     addJob(req,res)
     {
+        console.log("CON")
         let job = new AddJobModel();
-        console.log('CON');
         job.Description = req.body.JobDescription;
         job.LocationID = req.body.LocationID;
         job.Urgency = req.body.Urgency;
-        job.Date = req.body.Date;
+        job.JobDate = req.body.Date;
         job.Comment = req.body.Comment;
         job.empID = req.body.EmpID;
         return this.jobDAO.addJob(job)

@@ -47,6 +47,15 @@ class JobController {
         .then(this.common.editSuccess(res))
         .catch(this.common.serverError(res));
     };
+    setActive(req,res)
+    {
+        console.log("CON")
+        let jobid = req.body.JobID;
+        let empid =req.body.EmpID;
+        return this.JobDAO.setActive(jobid,empid)
+        .then(this.common.editSuccess(res))
+        .catch(this.common.serverError(res));
+    };
     
 
 

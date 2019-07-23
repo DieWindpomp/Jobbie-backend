@@ -60,7 +60,6 @@ class JobDAO {
         console.log('DAO');
         let sqlRequest = `INSERT INTO Job(Description,LocationID,EmpID,Urgency,Active,Date,Complete,Comment,Exist)
         VALUES($Description,$LocationID,$EmpID,$Urgency,$Active,$Date,$Complete,$Comment,$Exist)`;      
-        console.log(AddJob);
         let sqlParams = {
             $Description: AddJob.Description,
             $LocationID : AddJob.LocationID,
@@ -73,7 +72,25 @@ class JobDAO {
             $Exist : 1
             
         };
-        console.log(sqlParams);
+        return this.common.run(sqlRequest,sqlParams);
+    };
+    setActive(JOBID,EMPID)
+    {
+        console.log('DAO1');
+        let sqlRequest = `UPDATE Job
+        SET Active = 0
+        WHERE EmpID = $EmpID`;
+        let sqlParams = {$EmpID : EMPID};
+        this.common.run(sqlRequest,sqlParams);
+        return setActive2(JOBID);
+    };
+    setActive2(JOBID)
+    {
+        console.log('DAO2');
+        let sqlRequest = `UPDATE Job
+        SET Active = 1
+        WHERE id = $JobID`;
+        let sqlParams = {$JobID : JOBID};
         return this.common.run(sqlRequest,sqlParams);
     };
 

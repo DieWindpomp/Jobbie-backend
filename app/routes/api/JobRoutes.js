@@ -20,6 +20,11 @@ router.post('/AddJob/', function(req,res){
     jobController.addJob(req,res);
 });
 
+router.post('/SetActive/', function(req,res){
+    console.log('ROUTER');
+    jobController.setActive(req,res);
+});
+
 
 
 module.exports = router;

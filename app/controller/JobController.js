@@ -33,6 +33,14 @@ class JobController {
             .then(this.common.findSuccess(res))
             .catch(this.common.findError(res));
     };
+    findActiveByEmpId(req, res) {
+        console.log('CON');
+        let id = req.params.id;
+
+        this.jobDAO.findActiveByEmpId(id)
+            .then(this.common.findSuccess(res))
+            .catch(this.common.findError(res));
+    };
     addJob(req,res)
     {
         console.log("CON")
@@ -50,9 +58,9 @@ class JobController {
     setActive(req,res)
     {
         console.log("CON")
-        let jobid = req.body.JobID;
+        let jobid = req.body.id;
         let empid =req.body.EmpID;
-        return this.JobDAO.setActive(jobid,empid)
+        return this.jobDAO.setActive(jobid,empid)
         .then(this.common.editSuccess(res))
         .catch(this.common.serverError(res));
     };

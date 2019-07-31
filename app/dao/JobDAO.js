@@ -1,7 +1,7 @@
 /* Load Car entity */
 const Job = require('../model/Job');
 const JobL = require('../model/JobList');
-const AddJob = require('../model/AddJob');
+const JobDetail = require('../model/JobDetail');
 
 /* Load DAO Common functions */
 const daoCommon = require('./commons/daoCommon');
@@ -28,7 +28,7 @@ class JobDAO {
         EmpID=Employee.id AND
         Job.LocationID = Location.id AND
 		Location.id = ClientLocation.LocationID AND
-		ClientLocation.ClientID = Client.id`;
+		ClientLocation.ClientID = Client.id AND Job.Exist = 1`;
         
         return this.common.findAll(sqlRequest).then(rows =>
             {
@@ -39,6 +39,19 @@ class JobDAO {
                 }
                 return jobs;
             });
+    };
+    findActiveByEmpId(id) {
+        console.log('DAO');
+        let sqlRequest = `SELECT Job.id, (CName ||' '|| CSurname ||' '||CContact) AS 'ClientDetails',Job.Description,Comment,Job.LocationID,Coordinates,Address,Company 
+        FROM Job, Employee, Location, ClientLocation, Client  
+        WHERE EmpID = `+id+` AND 
+        EmpID=Employee.id AND
+        Job.LocationID = Location.id AND
+		Location.id = ClientLocation.LocationID AND
+        ClientLocation.ClientID = Client.id AND Job.Exist = 1 AND Job.Active = 1`;
+
+        return this.common.findOne(sqlRequest).then(row =>
+                new JobDetail(row.id,row.ClientDetails,row.Description,row.Comment,row.LocationID,row.Coordinates,row.Address,row.Company));
     };
 
     /**
@@ -74,17 +87,16 @@ class JobDAO {
         };
         return this.common.run(sqlRequest,sqlParams);
     };
-    setActive(JOBID,EMPID)
+    async setActive(JOBID,EMPID)
     {
         console.log('DAO1');
         let sqlRequest = `UPDATE Job
         SET Active = 0
         WHERE EmpID = $EmpID`;
         let sqlParams = {$EmpID : EMPID};
-        this.common.run(sqlRequest,sqlParams);
-        return setActive2(JOBID);
+        return this.common.run(sqlRequest,sqlParams).thenReturn(this.setActive2(JOBID));
     };
-    setActive2(JOBID)
+    async setActive2(JOBID)
     {
         console.log('DAO2');
         let sqlRequest = `UPDATE Job

@@ -24,6 +24,7 @@ let init = function () {
         EmpSurname TEXT,
         EmpPw TEXT,
         EmpContact TEXT,
+        Admin BOOL,
         Exist BOOL
     )`);
 

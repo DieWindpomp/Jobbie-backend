@@ -41,7 +41,9 @@ let init = function () {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         Coordinates TEXT,
         Address TEXT,
-        Exist BOOL
+        ClientID INTEGER,
+        Exist BOOL,
+        FOREIGN KEY(ClientID) REFERENCES Client(id)
     )`);
 
 
@@ -60,15 +62,6 @@ let init = function () {
         FOREIGN KEY(EmpID) REFERENCES Employee(id)
     )`);
 
-
-
-    db.run(`CREATE TABLE if not exists ClientLocation(
-        LocationID INTEGER,
-        ClientID INTEGER,
-        Exist BOOL,
-        FOREIGN KEY(LocationID) REFERENCES Location(id),
-        FOREIGN KEY(ClientID) REFERENCES Client(id) 
-    )`);
 
 
 };

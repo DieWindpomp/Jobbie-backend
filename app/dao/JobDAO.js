@@ -23,12 +23,12 @@ class JobDAO {
     findByEmpId(id) {
         console.log('DAO');
         let sqlRequest = `SELECT Job.id,Job.Description,Company,Urgency,Address, (CName ||' '|| CSurname ||' '||CContact) AS 'ClientDetails' 
-        FROM Job, Employee, Location, ClientLocation, Client  
+        FROM Job, Employee, Location, Client  
         WHERE EmpID = `+id+` AND 
         EmpID=Employee.id AND
-        Job.LocationID = Location.id AND
-		Location.id = ClientLocation.LocationID AND
-		ClientLocation.ClientID = Client.id AND Job.Exist = 1`;
+        Client.id = Location.ClientID AND
+        Job.LocationID = Location.id
+		AND Job.Exist = 1`;
         
         return this.common.findAll(sqlRequest).then(rows =>
             {
@@ -43,12 +43,12 @@ class JobDAO {
     findActiveByEmpId(id) {
         console.log('DAO');
         let sqlRequest = `SELECT Job.id, (CName ||' '|| CSurname ||' '||CContact) AS 'ClientDetails',Job.Description,Comment,Job.LocationID,Coordinates,Address,Company 
-        FROM Job, Employee, Location, ClientLocation, Client  
+        FROM Job, Employee, Location, Client  
         WHERE EmpID = `+id+` AND 
         EmpID=Employee.id AND
-        Job.LocationID = Location.id AND
-		Location.id = ClientLocation.LocationID AND
-        ClientLocation.ClientID = Client.id AND Job.Exist = 1 AND Job.Active = 1`;
+        Client.id = Location.ClientID AND
+        Job.LocationID = Location.id
+        AND Job.Exist = 1 AND Job.Active = 1`;
 
         return this.common.findOne(sqlRequest).then(row =>
                 new JobDetail(row.id,row.ClientDetails,row.Description,row.Comment,row.LocationID,row.Coordinates,row.Address,row.Company));

@@ -1,9 +1,8 @@
 class Location {
-    constructor(id, Coordinates, Address,Exist) {
+    constructor(id, Coordinates, Address) {
         this.id = id;
         this.Coordinates = Coordinates;
         this.Address = Address;
-        this.Exist = Exist;
     }
 }
 module.exports = Location;

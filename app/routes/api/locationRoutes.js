@@ -15,6 +15,11 @@ router.get('/getclientlocations/:id', function (req, res) {
     locationcontroller.getclientlocations(req,res);
 });
 
+router.post('/addLocation/',function (req,res){
+    console.log('Router');
+    locationcontroller.addlocation(req,res);
+});
+
 
 
 

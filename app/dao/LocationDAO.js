@@ -9,11 +9,13 @@ class LocationDAO{
 addLocation(addlocation){
 
     console.log("DAO");
-    let sqlRequest = `INSERT INTO Location`;
+    let sqlRequest = `INSERT into Location (Address,Coordinates,ClientID,Exist)
+    VALUES($address,$coordinates,$clientid,1)`;
     let sqlParams = {
         $id : addlocation.id,
         $address : addlocation.Address,
-        $coordinates : addlocation.clientid
+        $coordinates : addlocation.Coordinates,
+        $clientid : addlocation.ClientID
     };
     return this.common.run(sqlRequest,sqlParams);
 }

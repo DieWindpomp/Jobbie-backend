@@ -16,6 +16,18 @@ class LocationController {
         this.common = new ControllerCommon();
     }
 
+    addlocation(req,res){
+        console.log('CON');
+        console.log("CON")
+        let Location = new LocationM();
+        Location.Coordinates = req.body.Coordinates;
+        Location.Address = req.body.Address;
+        Location.ClientID = req.body.ClientID;
+        return this.locationDAO.addLocation(Location)
+        .then(this.common.editSuccess(res))
+        .catch(this.common.serverError(res));
+    }
+
     getclientlocations(req, res) {
         console.log('CON');
         let id = req.params.id;

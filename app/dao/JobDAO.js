@@ -44,7 +44,8 @@ class JobDAO {
         console.log('DAO');
         let sqlRequest = `SELECT Job.id, (CName ||' '|| CSurname ||' '||CContact) AS 'ClientDetails',Job.Description,Comment,Job.LocationID,Coordinates,Address,Company 
         FROM Job, Employee, Location, Client  
-        WHERE EmpID = `+id+` AND 
+        WHERE EmpID = `+id+` 
+        AND 
         EmpID=Employee.id AND
         Client.id = Location.ClientID AND
         Job.LocationID = Location.id

@@ -29,6 +29,26 @@ router.post('/SetActive/', function(req,res){
     jobController.setActive(req,res);
 });
 
+router.post('/completeJob/:id',function(req,res){
+    console.log('Router');
+    jobController.completeJob(req,res);
+});
+
+router.post('/AddComment/:id/:comment',function(req,res){
+    console.log('Router');
+    jobController.AddComment(req,res);
+});
+
+router.post('/SetUnactive/:id',function(req,res){
+    console.log('Router');
+    jobController.setUnactive(req,res);
+});
+
+router.post('/RemoveJob/:id',function(req,res){
+    console.log('Router');
+    jobController.RemoveJob(req,res);
+});
+
 
 
 module.exports = router;

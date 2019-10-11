@@ -64,6 +64,42 @@ class JobController {
         .then(this.common.editSuccess(res))
         .catch(this.common.serverError(res));
     };
+    completeJob(req,res)
+    {
+        console.log("CON");
+        let jobid = req.params.id;
+        return this.jobDAO.completeJob(jobid)
+        .then(this.common.editSuccess(res))
+        .catch(this.common.serverError(res))
+    }
+    AddComment(req,res)
+    {        
+        console.log("CON");
+        let jobid = req.params.id;
+        let Comment = req.params.comment;
+        return this.jobDAO.AddComment(jobid,Comment)
+        .then(this.common.editSuccess(res))
+        .catch(this.common.serverError(res))
+    };
+    setUnactive(req,res)
+    {
+        console.log("CON");
+        let jobid = req.params.id;
+        return this.jobDAO.setUnactive(jobid)
+        .then(this.common.editSuccess(res))
+        .catch(this.common.serverError(res))
+    }
+    RemoveJob(req,res)
+    {
+        console.log("CON");
+        let jobid = req.params.id;
+        return this.jobDAO.RemoveJob(jobid)
+        .then(this.common.editSuccess(res))
+        .catch(this.common.serverError(res))
+    }
+
+
+
     
 
 

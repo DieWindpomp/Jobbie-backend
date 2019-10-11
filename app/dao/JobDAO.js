@@ -28,7 +28,9 @@ class JobDAO {
         EmpID=Employee.id AND
         Client.id = Location.ClientID AND
         Job.LocationID = Location.id
-		AND Job.Exist = 1`;
+        AND Job.Exist = 1
+        AND Active = 0 AND
+        Complete = 0`;
         
         return this.common.findAll(sqlRequest).then(rows =>
             {
@@ -106,6 +108,47 @@ class JobDAO {
         let sqlParams = {$JobID : JOBID};
         return this.common.run(sqlRequest,sqlParams);
     };
+    completeJob(JobID)
+    {
+        console.log('DAO');
+        let sqlRequest = `UPDATE Job 
+        SET Complete = 1,
+        Active = 0
+        WHERE id =$JobID`;
+        let sqlParams = {$JobID : JobID};
+        return this.common.run(sqlRequest,sqlParams);
+    };
+    AddComment(JobID,Comment)
+    {
+        console.log('DAO');
+        let sqlRequest = `UPDATE Job 
+        SET Comment = $Comment
+        WHERE 
+        id = $JobID`;
+        let sqlParams = {$Comment:Comment,$JobID : JobID};
+        return this.common.run(sqlRequest,sqlParams);
+    };
+    setUnactive(JobID)
+    {
+        console.log('DAO');
+        let sqlRequest = `UPDATE Job
+        SET Active = 0
+        WHERE id = $JobID`;
+        let sqlParams = {$JobID : JobID};
+        return this.common.run(sqlRequest,sqlParams);
+    }
+    RemoveJob(JOBID)
+    {
+        console.log('DAO');
+        let sqlRequest = `UPDATE Job
+        SET Exist = 0,
+        Active = 0
+        WHERE id = $JobID`;
+        let sqlParams = {$JobID : JOBID};
+        return this.common.run(sqlRequest,sqlParams);
+    }
+
+
 
     
 }

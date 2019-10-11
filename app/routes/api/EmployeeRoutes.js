@@ -10,14 +10,32 @@ const employeeController = new EmployeeController();
  * Car Entity routes
  */
 
-router.get('/:id', function (req, res) {
+router.get('GetEmp/:id', function (req, res) {
     console.log('ROUTER');
     employeeController.findById(req, res);
 });
 router.get('/Login/:username/:password', function (req,res){
     console.log('ROUTER');
-    employeeController.Login(req,res);  
+    employeeController.Login(req,res);
 })
+router.get('/AllEmployees/:id', function (req,res)
+{
+    console.log("Router");
+    employeeController.findAllEmployees(req,res);
+});
+router.get('/GetLocation/:id',function (req,res)
+{
+    console.log('router');
+    employeeController.GetEmployeeLocations(req,res);
+});
+router.post('/AddEmployee',function(req,res)
+{
+console.log('Router');
+employeeController.AddEmployee(req,res);
+});
+
+
+
 
 
 module.exports = router;

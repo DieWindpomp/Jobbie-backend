@@ -10,7 +10,7 @@ const employeeController = new EmployeeController();
  * Car Entity routes
  */
 
-router.get('GetEmp/:id', function (req, res) {
+router.get('/GetEmp/:id', function (req, res) {
     console.log('ROUTER');
     employeeController.findById(req, res);
 });
@@ -23,6 +23,12 @@ router.get('/AllEmployees/:id', function (req,res)
     console.log("Router");
     employeeController.findAllEmployees(req,res);
 });
+router.get('/AllEmployees', function (req,res)
+{
+    console.log("Router");
+    employeeController.findAllEmployees2(req,res);
+});
+
 router.get('/GetLocation/:id',function (req,res)
 {
     console.log('router');
@@ -32,6 +38,17 @@ router.post('/AddEmployee',function(req,res)
 {
 console.log('Router');
 employeeController.AddEmployee(req,res);
+});
+
+router.post('/UpdateEmployee',function(req,res)
+{
+console.log('Router');
+employeeController.UpdateEmployee(req,res);
+});
+
+router.post('/DeleteEmployee/:id',function(req,res){
+console.log('Router');
+employeeController.DeleteEmployee(req,res);
 });
 
 

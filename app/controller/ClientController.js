@@ -36,6 +36,31 @@ class ClientController {
         .then(this.common.editSuccess(res))
         .catch(this.common.serverError(res));
     }
+        DeleteClient(req,res)
+    {
+        console.log("CON delete client");
+        let id = req.params.id;
+        return this.ClientDAO.DeleteClient(id)
+        .then(this.common.editSuccess(res))
+        .catch(this.common.serverError(res));
+    };
+    UpdateClient(req,res)
+    {
+        console.log("CON");
+        console.log(req.body);
+        let client = new Client();
+        client.CName = req.body.CName;
+        client.CSurname = req.body.CSurname;
+        client.CContact = req.body.CContact;
+        client.Company = req.body.Company;
+        client.id = req.body.id;
+        return this.ClientDAO.UpdateClient(client)
+        .then(this.common.editSuccess(res))
+        .catch(this.common.serverError(res));
+    };
+
+
+
 
 }
 

@@ -32,7 +32,7 @@ deleteLocation(locationid)
 getclientlocations(clientid)
 {
     console.log("DAO " + clientid);
-    let sqlRequest = `SELECT Location.id,Coordinates,Address 
+    let sqlRequest = `SELECT Location.id,Coordinates,Address,ClientID 
     FROM Location WHERE ClientID = `+clientid+`
     AND Location.Exist = 1`;
     
@@ -41,12 +41,41 @@ getclientlocations(clientid)
             let locations = [];
             for (const row of rows)
             {
-                locations.push(new Location(row.id,row.Coordinates,row.Address));
+                locations.push(new Location(row.id,row.Coordinates,row.Address,row.ClientID));
             }          
             return locations;
         });
-};
+}
+UpdateLocation(addlocation){
 
+    console.log("DAO");
+    console.log(addlocation);
+    let sqlRequest = `UPDATE Location 
+                        SET Address=$address,Coordinates=$coordinates,ClientID= $clientid
+                        WHERE id = $id`;
+    let sqlParams = {
+        $id : addlocation.id,
+        $address : addlocation.Address,
+        $coordinates : addlocation.Coordinates,
+        $clientid : addlocation.ClientID,
+        $id : addlocation.id
+    };
+    return this.common.run(sqlRequest,sqlParams);
+}
+DeleteLocation(id)
+{
+    console.log('DAO');
+
+    let sqlRequest = `UPDATE Location 
+                        SET Exist = 0
+                        WHERE id = $id`;      
+    let sqlParams = {
+  
+        $id : id          
+    };
+
+    return this.common.run(sqlRequest,sqlParams); 
+}
 
 
 

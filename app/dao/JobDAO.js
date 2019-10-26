@@ -44,7 +44,7 @@ class JobDAO {
     };
     findActiveByEmpId(id) {
         console.log('DAO');
-        let sqlRequest = `SELECT Job.id, (CName ||' '|| CSurname ||' '||CContact) AS 'ClientDetails',Job.Description,Comment,Job.LocationID,Coordinates,Address,Company 
+        let sqlRequest = `SELECT Job.id, (CName ||' '|| CSurname ||' - '||CContact) AS 'ClientDetails',Job.Description,Comment,Job.LocationID,Coordinates,Address,Company 
         FROM Job, Employee, Location, Client  
         WHERE EmpID = `+id+` 
         AND 

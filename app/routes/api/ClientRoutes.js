@@ -19,6 +19,18 @@ router.post('/addClient',function(req,res)
     console.log("ROUTER");
     clientController.AddClient(req,res);
 });
+router.post('/UpdateClient',function(req,res)
+{
+    console.log("ROUTER");
+    clientController.UpdateClient(req,res);
+});
+router.post('/DeleteClient/:id',function(req,res)
+{
+    console.log("ROUTER delete client");
+    clientController.DeleteClient(req,res);
+});
+
+
 
 
 

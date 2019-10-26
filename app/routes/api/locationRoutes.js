@@ -19,6 +19,14 @@ router.post('/addLocation/',function (req,res){
     console.log('Router');
     locationcontroller.addlocation(req,res);
 });
+router.post('/UpdateLocation/',function (req,res){
+    console.log('Router');
+    locationcontroller.Updatelocation(req,res);
+});
+router.post('/DeleteLocation/:id', function(req,res){
+console.log("Router");
+locationcontroller.DeleteLocation(req,res);
+});
 
 
 

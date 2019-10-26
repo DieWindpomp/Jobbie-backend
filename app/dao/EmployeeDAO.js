@@ -22,21 +22,35 @@ class EmployeeDAO {
     findById(id) 
     {
         console.log('DAO');
-        let sqlRequest = "SELECT * FROM Employee WHERE id=$id AND Exist= 1";
+        let sqlRequest = "SELECT * FROM Employee WHERE id=$id AND Exist= 1 AND id != 1";
         let sqlParams = {$id: id};
         return this.common.findOne(sqlRequest, sqlParams).then(row =>
-            new Employee(row.id,row.EmpName,row.EmpSurname,row.EmpPw,row.EmpContact,row.Admin,row.Exist));
+            new Employee(row.id,row.EmpName,row.EmpSurname,row.EmpContact,row.EmpPw,row.Admin,row.Exist));
     };
     findAllEmployees(id) 
     {
         console.log('DAO');
-        let sqlRequest = "SELECT * FROM Employee WHERE id != "+id+" AND Exist= 1";
+        let sqlRequest = "SELECT * FROM Employee WHERE id != "+id+" AND Exist= 1 AND id != 1";
         return this.common.findAll(sqlRequest).then(rows =>
             {
                 let emps = [];
                 for(const row of rows)
                 {
-                    emps.push(new Employee(row.id,row.EmpName,row.EmpSurname,row.EmpContact,row.Admin,row.Exist));
+                    emps.push(new Employee(row.id,row.EmpName,row.EmpSurname,row.EmpContact,"",row.Admin,row.Exist));
+                }
+                return emps;
+            });
+    };
+    findAllEmployees2() 
+    {
+        console.log('DAO');
+        let sqlRequest = "SELECT * FROM Employee WHERE Exist= 1 AND id != 1";
+        return this.common.findAll(sqlRequest).then(rows =>
+            {
+                let emps = [];
+                for(const row of rows)
+                {
+                    emps.push(new Employee(row.id,row.EmpName,row.EmpSurname,row.EmpContact,"",row.Admin,row.Exist));
                 }
                 return emps;
             });
@@ -47,7 +61,7 @@ class EmployeeDAO {
         let sqlRequest = "SELECT id, Admin FROM Employee WHERE $username = (EmpName || EmpSurname) AND EmpPw = $password AND Exist = 1";
         let sqlParams = {$username: username , $password:password};
         return this.common.findOne(sqlRequest, sqlParams).then(row =>
-            new Employee(row.id,"","","",row.Admin,""));            
+            new Employee(row.id,"","","","",row.Admin,""));            
     }
     GetEmployeeLocations(id)
     {
@@ -77,6 +91,31 @@ class EmployeeDAO {
             $EmpContact : addEmployee.EmpContact,
             $Admin : addEmployee.Admin,
             $Exist : 1};
+        return this.common.run(sqlRequest,sqlParams);
+    }
+    UpdateEmployee(addEmployee)
+    {
+        console.log('DAO');
+        let sqlRequest = `UPDATE Employee
+                            SET EmpName = $EmpName,EmpSurname=$EmpSurname,EmpPw=$EmpPw,EmpContact=$EmpContact,Admin = $Admin
+                            WHERE id = $id`;
+        let sqlParams = {
+            $id : addEmployee.id,
+            $EmpName : addEmployee.EmpName,
+            $EmpSurname : addEmployee.EmpSurname,
+            $EmpPw : addEmployee.EmpPw,
+            $EmpContact : addEmployee.EmpContact,
+            $Admin : addEmployee.Admin};
+        return this.common.run(sqlRequest,sqlParams);
+    }
+    DeleteEmployee(id)
+    {
+        console.log('DAO');
+        let sqlRequest = `UPDATE Employee
+                            SET Exist = 0
+                            WHERE id = $id`;
+        let sqlParams = {
+            $id : id};
         return this.common.run(sqlRequest,sqlParams);
     }
 

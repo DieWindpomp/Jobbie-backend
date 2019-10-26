@@ -44,6 +44,13 @@ class EmployeeController {
         .then(this.common.findSuccess(res))
         .catch(this.common.findError(res));
     };
+    findAllEmployees2(req,res)
+    {
+        console.log('CON');
+        this.employeeDAO.findAllEmployees2()
+        .then(this.common.findSuccess(res))
+        .catch(this.common.findError(res));
+    };
     GetEmployeeLocations(req,res)
     {
         console.log('CON');
@@ -56,7 +63,6 @@ class EmployeeController {
     {
 
         console.log('CON');
-        console.log(req.body)
         let employee = new AddEmployeeM();
         employee.EmpName = req.body.EmpName;
         employee.EmpSurname = req.body.EmpSurname;
@@ -64,6 +70,28 @@ class EmployeeController {
         employee.Admin = req.body.Admin;
         employee.EmpContact = req.body.EmpContact;
         return this.employeeDAO.AddEmployee(employee)
+        .then(this.common.editSuccess(res))
+        .catch(this.common.serverError(res));
+    }
+    UpdateEmployee(req,res)
+    {
+        console.log('Con');
+        let employee = new EmployeeM();
+        employee.id = req.body.id;
+        employee.EmpName = req.body.EmpName;
+        employee.EmpSurname = req.body.EmpSurname;
+        employee.EmpPw = req.body.EmpPw;
+        employee.Admin = req.body.Admin;
+        employee.EmpContact = req.body.EmpContact;
+        return this.employeeDAO.UpdateEmployee(employee)
+        .then(this.common.editSuccess(res))
+        .catch(this.common.serverError(res));
+    }
+    DeleteEmployee(req,res)
+    {
+        console.log('Con');
+        let id = req.params.id;
+        return this.employeeDAO.DeleteEmployee(id)
         .then(this.common.editSuccess(res))
         .catch(this.common.serverError(res));
     }

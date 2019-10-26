@@ -18,7 +18,6 @@ class LocationController {
 
     addlocation(req,res){
         console.log('CON');
-        console.log("CON")
         let Location = new LocationM();
         Location.Coordinates = req.body.Coordinates;
         Location.Address = req.body.Address;
@@ -36,6 +35,27 @@ class LocationController {
             .then(this.common.findSuccess(res))
             .catch(this.common.findError(res));
     };
+
+    Updatelocation(req,res){
+        console.log('CON');
+        let Location = new LocationM();
+        Location.Coordinates = req.body.Coordinates;
+        Location.Address = req.body.Address;
+        Location.ClientID = req.body.ClientID;
+        Location.id = req.body.id;
+        return this.locationDAO.UpdateLocation(Location)
+        .then(this.common.editSuccess(res))
+        .catch(this.common.serverError(res));
+    };
+    DeleteLocation(req,res)
+    {
+        console.log("CON");
+        let id = req.params.id;
+        return this.locationDAO.DeleteLocation(id)
+        .then(this.common.editSuccess(res))
+        .catch(this.common.serverError(res));
+    };
+
 
 }
 

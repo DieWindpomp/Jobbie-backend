@@ -20,7 +20,6 @@ class ClientDAO {
             for (const row of rows) {
                 clients.push(new Client(row.id, row.CName, row.CSurname, row.CContact, row.Company, row.Exist));
             }
-            console.log(clients);
             return clients;
         });
     };
@@ -28,7 +27,7 @@ class ClientDAO {
     AddClient(client) 
     {
         console.log('DAO');
-        console.log(client);
+
         let sqlRequest = `INSERT into Client (CName,CSurname,CContact,Company,Exist)
         VALUES($CName,$CSurname,$CContact,$Company,$Exist)`;      
         let sqlParams = {
@@ -38,9 +37,36 @@ class ClientDAO {
             $Company : client.Company,        
             $Exist : 1          
         };
-        console.log(sqlParams);
+
         return this.common.run(sqlRequest,sqlParams); 
     }
+
+    UpdateClient(client) 
+    {
+        console.log('DAO');
+
+        let sqlRequest = `UPDATE Client 
+                            SET CName = $CName,CSurname = $CSurname,CContact = $CContact,Company = $Company
+                            WHERE id = $id`;      
+        let sqlParams = {
+            $CName : client.CName,
+            $CSurname : client.CSurname,
+            $CContact : client.CContact,
+            $Company : client.Company,        
+            $id : client.id          
+        };
+
+        return this.common.run(sqlRequest,sqlParams); 
+    }
+    DeleteClient(id)
+    {
+        console.log('DAO delete client '+id );
+
+        let sqlRequest = `UPDATE Client SET Exist = 0 WHERE id = $id`;      
+        let sqlParams = {$id : id};
+
+        return this.common.run(sqlRequest,sqlParams); 
+    };
 
     
 }

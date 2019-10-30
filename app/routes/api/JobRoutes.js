@@ -14,6 +14,10 @@ router.get('/GetJobsByEmp/:id', function (req, res) {
     console.log('ROUTER');
     jobController.findByEmpId(req, res);
 });
+router.get('/GetJobsByEmpCompleted/:id', function (req, res) {
+    console.log('ROUTER');
+    jobController.findByEmpIdCompleted(req, res);
+});
 router.get('/GetActiveJobByEmp/:id', function (req, res) {
     console.log('ROUTER');
     jobController.findActiveByEmpId(req, res);

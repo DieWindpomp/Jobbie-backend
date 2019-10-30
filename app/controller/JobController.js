@@ -33,6 +33,14 @@ class JobController {
             .then(this.common.findSuccess(res))
             .catch(this.common.findError(res));
     };
+    findByEmpIdCompleted(req, res) {
+        console.log('CON');
+        let id = req.params.id;
+
+        this.jobDAO.findByEmpIdCompleted(id)
+            .then(this.common.findSuccess(res))
+            .catch(this.common.findError(res));
+    };
     findActiveByEmpId(req, res) {
         console.log('CON');
         let id = req.params.id;

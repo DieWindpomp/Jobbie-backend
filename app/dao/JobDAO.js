@@ -30,7 +30,31 @@ class JobDAO {
         Job.LocationID = Location.id
         AND Job.Exist = 1
         AND Active = 0 AND
-        Complete = 0`;
+        Complete = 0
+        ORDER BY Job.Date, Job.Urgency`;
+        
+        return this.common.findAll(sqlRequest).then(rows =>
+            {
+                let jobs = [];
+                for(const row of rows)
+                {
+                    jobs.push(new JobL(row.id,row.Description,row.Company,row.Urgency,row.Address,row.ClientDetails));
+                }
+                return jobs;
+            });
+    };
+    findByEmpIdCompleted(id) {
+        console.log('DAO');
+        let sqlRequest = `SELECT Job.id,Job.Description,Company,Urgency,Address, (CName ||' '|| CSurname ||' '||CContact) AS 'ClientDetails' 
+        FROM Job, Employee, Location, Client  
+        WHERE EmpID = `+id+` AND 
+        EmpID=Employee.id AND
+        Client.id = Location.ClientID AND
+        Job.LocationID = Location.id
+        AND Job.Exist = 1
+        AND Active = 0 AND
+        Complete = 1
+        ORDER BY Job.Date, Job.Urgency`;
         
         return this.common.findAll(sqlRequest).then(rows =>
             {

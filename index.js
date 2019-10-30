@@ -28,7 +28,7 @@ app.use(REST_API_ROOT, require('./app/routes/router'));
 var path = require('path');
 
 app.get('/downloadFile', function (req, res) {
-   var file = path.join(__dirname, 'file.pdf');
+   var file = path.join(__dirname, 'Jobbie Help.pdf');
    res.download(file, function (err) {
        if (err) {
            console.log("Error");
@@ -38,3 +38,14 @@ app.get('/downloadFile', function (req, res) {
        }
    });
 });
+app.get('/downloadTutorial', function (req, res) {
+    var file = path.join(__dirname, 'Jobbie Tut.mp4');
+    res.download(file, function (err) {
+        if (err) {
+            console.log("Error");
+            console.log(err);
+        } else {
+            console.log("Success");
+        }
+    });
+ });
